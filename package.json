@@ -4,8 +4,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "cleanup": "bun pm cache rm",
     "build": "rollup -c",
-    "repl": "dotenv -e .env -- npm run build && node -e \"import('./scripts/repl.mjs')\" --interactive"
+    "start": "npm run build && dotenv -e .env -- bun ./build/index.mjs --noJob --serve",
+    "start:launcher": "npm run start:launcher:x",
+    "start:launcher:x": "dotenv -e .env -- bun ./index.cjs",
+    "start:launcher:win": "dotenv -e .env -- bun ./index.cjs",
+    "start:debug": "npm run build && dotenv -e .env -- bun --inspect-brk ./build/index.mjs --noJob --serve",
+    "start:repl": "npm run build && dotenv -e .env -- bun ./scripts/repl.ts --repl",
+    "publish:win": "npm run build && .\\scripts\\win\\publish.bat",
+    "publish:x": "npm run build && sh ./scripts/linux/publish.sh"
   },
   "files": [
     "build"
@@ -20,9 +28,14 @@
     "rollup": "3.29.4",
     "tslib": "2.8.1",
     "@types/stack-trace": "0.0.33",
+    "dotenv-cli": "7.4.2",
+    "ts-morph": "25.0.1",
     "typescript": "5.8.2"
   },
   "dependencies": {
+    "@hono/node-server": "1.14.4",
+    "@hono/node-ws": "1.1.4",
+    "hono": "4.7.5",
     "stack-trace": "1.0.0-pre2",
     "di-factory": "1.0.9",
     "backtest-kit": "1.1.3",

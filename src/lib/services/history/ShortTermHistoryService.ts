@@ -16,7 +16,7 @@ import ExchangeService from "../base/ExchangeService";
 const SHUTDOWN_THRESHOLD_MS = 4 * 60 * 60 * 1_000;
 
 const HISTORY_TTL = 5 * 60 * 1_000;
-const HISTORY_ROWS = 10;
+const HISTORY_ROWS = 2016; // 7 дней: 7 * 24 * 60 / 5 = 2016
 
 interface Column {
   key: keyof IShortTermRow;

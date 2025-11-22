@@ -13,7 +13,7 @@ const SHUTDOWN_THRESHOLD_MS = 4 * 60 * 60 * 1_000;
 
 // ОПТИМИЗИРОВАНО ДЛЯ СКАЛЬПИНГА: более частое сохранение истории (30 минут вместо 1 часа)
 const HISTORY_TTL = 30 * 60 * 1_000;
-const HISTORY_ROWS = 5;
+const HISTORY_ROWS = 336; // 7 дней: 7 * 24 * 60 / 30 = 336
 
 interface Column {
   key: keyof ILongTermRow;

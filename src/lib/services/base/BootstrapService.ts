@@ -23,7 +23,7 @@ interface IBroadcastMessage<T extends object = object> {
 
 type Message = Omit<IBroadcastMessage, "__type__">;
 
-const BROADCAST_CHANNEL = "tradegpt-broadcast-channel";
+const BROADCAST_CHANNEL = "node-ccxt-dumper-broadcast-channel";
 
 export class BootstrapService {
   private readonly errorService = inject<ErrorService>(TYPES.errorService);

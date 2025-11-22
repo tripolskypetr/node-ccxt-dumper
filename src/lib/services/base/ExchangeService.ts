@@ -1,23 +1,55 @@
 import { log } from "pinolog";
-import { getExchange } from "src/config/ccxt";
+import { getExchange } from "../../../config/ccxt";
+
+type CandleInterval = "1m" | "3m" | "5m" | "15m" | "30m" | "1h" | "2h" | "4h" | "6h" | "8h";
+
+const INTERVAL_MINUTES: Record<CandleInterval, number> = {
+  "1m": 1,
+  "3m": 3,
+  "5m": 5,
+  "15m": 15,
+  "30m": 30,
+  "1h": 60,
+  "2h": 120,
+  "4h": 240,
+  "6h": 360,
+  "8h": 480,
+};
 
 export class ExchangeService {
   public getCandles = async (
     symbol: string,
-    interval: string,
+    interval: CandleInterval,
     limit: number
   ) => {
     log("exchangeService getCandles", {
       symbol,
+      interval,
+      limit,
     });
     const exchange = await getExchange();
+
+    const step = INTERVAL_MINUTES[interval];
+    const adjust = step * limit - step;
+
+    if (!adjust) {
+      throw new Error(
+        `ExchangeService unknown time adjust for interval=${interval}`
+      );
+    }
+
+    // Calculate 'since' timestamp - going backwards from now
+    const now = Date.now();
+    const since = now - adjust * 60 * 1_000;
+
     const candles = await exchange.fetchOHLCV(
       symbol,
       interval,
-      await exchange.fetchTime(),
+      since,
       limit
     );
-    return candles.map(([timestamp, open, high, low, close, volume]) => ({
+
+    const data = candles.map(([timestamp, open, high, low, close, volume]) => ({
       timestamp,
       open,
       high,
@@ -25,6 +57,18 @@ export class ExchangeService {
       close,
       volume,
     }));
+
+    // Filter candles to strictly match the requested range
+    const filteredData = data.filter(
+      (candle) =>
+        candle.timestamp >= since && candle.timestamp <= now
+    );
+
+    if (filteredData.length < limit) {
+      log(`exchangeService Expected ${limit} candles, got ${filteredData.length}`);
+    }
+
+    return filteredData;
   };
 
   public async getMarketPrice(symbol: string): Promise<number> {

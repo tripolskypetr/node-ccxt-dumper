@@ -1,0 +1,455 @@
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 30571,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 31058,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 31054,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 31064,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 31108,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:14
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 31114,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+
+23/11/2025 03:15
+{
+  "message": "connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017",
+  "errorLabelSet": {},
+  "reason": {
+    "type": "Unknown",
+    "servers": {
+      "localhost:27017": {
+        "address": "localhost:27017",
+        "type": "Unknown",
+        "hosts": [],
+        "passives": [],
+        "arbiters": [],
+        "tags": {},
+        "minWireVersion": 0,
+        "maxWireVersion": 0,
+        "roundTripTime": -1,
+        "minRoundTripTime": 0,
+        "lastUpdateTime": 30693,
+        "lastWriteDate": 0,
+        "error": {
+          "errorLabelSet": {},
+          "beforeHandshake": false
+        },
+        "topologyVersion": null,
+        "setName": null,
+        "setVersion": null,
+        "electionId": null,
+        "logicalSessionTimeoutMinutes": null,
+        "maxMessageSizeBytes": null,
+        "maxWriteBatchSize": null,
+        "maxBsonObjectSize": null,
+        "primary": null,
+        "me": null,
+        "$clusterTime": null,
+        "iscryptd": false
+      }
+    },
+    "stale": false,
+    "compatible": true,
+    "heartbeatFrequencyMS": 10000,
+    "localThresholdMS": 15,
+    "setName": null,
+    "maxElectionId": null,
+    "maxSetVersion": null,
+    "commonWireVersion": 0,
+    "logicalSessionTimeoutMinutes": null
+  },
+  "line": 1,
+  "column": 28,
+  "stack": "MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017\n    at new MongooseError (unknown:1:28)\n    at new MongooseServerSelectionError (unknown:1:28)\n    at _handleConnectionErrors (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1165:11)\n    at openUri (C:\\Users\\User\\Documents\\GitHub\\node-ccxt-dumper\\node_modules\\mongoose\\lib\\connection.js:1096:11)\n    at processTicksAndRejections (native:7:39)"
+}
+File: C:\Users\User\Documents\GitHub\node-ccxt-dumper\build\index.mjs
+Line: 286
+Function: dumpStackTrace
+Method: dumpStackTrace
+---
+Line: 319
+Function: anonymous
+Method: none
+Line: 312
+Function: handleGlobalError
+Method: handleGlobalError
+Line: 336
+

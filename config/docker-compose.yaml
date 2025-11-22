@@ -1,0 +1,17 @@
+services:
+  app:
+    image: tripolskypetr/node-ccxt-dumper:latest
+    network_mode: host
+    volumes:
+      - "./logs:/app/logs"
+    environment:
+      - TZ=Asia/Tashkent
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:30050/health_check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+    cpus: "8.0"
