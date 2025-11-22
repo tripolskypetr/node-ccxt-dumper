@@ -249,7 +249,7 @@ Long-term analysis on 1-hour timeframe (7 days history, 336 candles).
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/long-term/BTC/USDT \
+curl -X POST http://localhost:30050/export/long-term/BTCUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-001", "serviceName": "trading-bot"}'
 ```
@@ -265,7 +265,7 @@ Medium-term analysis on 15-minute timeframe (7 days history, 672 candles).
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/swing-term/ETH/USDT \
+curl -X POST http://localhost:30050/export/swing-term/ETHUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-002", "serviceName": "trading-bot"}'
 ```
@@ -282,7 +282,7 @@ Short-term analysis on 5-minute timeframe (7 days history, 2016 candles).
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/short-term/BNB/USDT \
+curl -X POST http://localhost:30050/export/short-term/BNBUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-003", "serviceName": "trading-bot"}'
 ```
@@ -298,7 +298,7 @@ Ultra-short-term analysis on 2-minute timeframe (3 days history, 2160 candles).
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/micro-term/SOL/USDT \
+curl -X POST http://localhost:30050/export/micro-term/SOLUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-004", "serviceName": "trading-bot"}'
 ```
@@ -314,7 +314,7 @@ Analysis of slopes and trend lines.
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/slope-data/ADA/USDT \
+curl -X POST http://localhost:30050/export/slope-data/ADAUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-005", "serviceName": "trading-bot"}'
 ```
@@ -331,7 +331,7 @@ Detailed trading volume analysis.
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/volume-data/XRP/USDT \
+curl -X POST http://localhost:30050/export/volume-data/XRPUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-006", "serviceName": "trading-bot"}'
 ```
@@ -343,7 +343,7 @@ History of 1-minute candles.
 
 **Example:**
 ```bash
-curl -X POST http://localhost:3000/export/history/one-minute/BTC/USDT \
+curl -X POST http://localhost:30050/export/history/one-minute/BTCUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-007", "serviceName": "trading-bot"}'
 ```
@@ -351,11 +351,32 @@ curl -X POST http://localhost:3000/export/history/one-minute/BTC/USDT \
 #### POST `/export/history/fifteen-minute/:symbol`
 History of 15-minute candles.
 
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/fifteen-minute/BTCUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-008", "serviceName": "trading-bot"}'
+```
+
 #### POST `/export/history/thirty-minute/:symbol`
 History of 30-minute candles.
 
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/thirty-minute/BTCUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-009", "serviceName": "trading-bot"}'
+```
+
 #### POST `/export/history/hour/:symbol`
 History of hourly candles.
+
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/hour/BTCUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-010", "serviceName": "trading-bot"}'
+```
 
 #### POST `/export/history/long-term/:symbol`
 History of long-term analyses (30-minute TTL, 7 days).
@@ -365,22 +386,52 @@ History of long-term analyses (30-minute TTL, 7 days).
 - Indicator change trends
 - Historical signals
 
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/long-term/BTCUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-011", "serviceName": "trading-bot"}'
+```
+
 #### POST `/export/history/swing-term/:symbol`
 History of medium-term analyses (15-minute TTL, 7 days).
+
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/swing-term/ETHUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-012", "serviceName": "trading-bot"}'
+```
 
 #### POST `/export/history/short-term/:symbol`
 History of short-term analyses (5-minute TTL, 7 days).
 
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/short-term/BNBUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-013", "serviceName": "trading-bot"}'
+```
+
 #### POST `/export/history/micro-term/:symbol`
 History of ultra-short-term analyses (2-minute TTL, 3 days).
 
+**Example:**
+```bash
+curl -X POST http://localhost:30050/export/history/micro-term/SOLUSDT \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "req-014", "serviceName": "trading-bot"}'
+```
+
 ## Symbol Format
 
-All endpoints accept symbols in CCXT format: `BASE/QUOTE`, for example:
-- `BTC/USDT`
-- `ETH/USDT`
-- `BNB/BUSD`
-- `SOL/USDT`
+All endpoints accept symbols in Binance format (without slash): `BASEQUOTE`, for example:
+- `BTCUSDT`
+- `ETHUSDT`
+- `BNBUSDT`
+- `SOLUSDT`
+- `XRPUSDT`
+- `ADAUSDT`
 
 ## Timeframes and Retention Periods
 
@@ -420,10 +471,10 @@ All endpoints accept symbols in CCXT format: `BASE/QUOTE`, for example:
 
 ## Usage Examples
 
-### Getting long-term analysis for BTC/USDT
+### Getting long-term analysis for BTCUSDT
 
 ```javascript
-const response = await fetch('http://localhost:3000/export/long-term/BTC/USDT', {
+const response = await fetch('http://localhost:30050/export/long-term/BTCUSDT', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -447,7 +498,7 @@ if (result.status === 'ok') {
 ### Batch fetching all timeframes
 
 ```javascript
-const symbol = 'ETH/USDT';
+const symbol = 'ETHUSDT';
 const requestId = Date.now().toString();
 
 const endpoints = [
@@ -461,7 +512,7 @@ const endpoints = [
 
 const results = await Promise.all(
   endpoints.map(endpoint =>
-    fetch(`http://localhost:3000${endpoint}/${symbol}`, {
+    fetch(`http://localhost:30050${endpoint}/${symbol}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ requestId, serviceName: 'multi-timeframe-analysis' })
