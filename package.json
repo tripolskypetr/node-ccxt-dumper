@@ -1,0 +1,38 @@
+{
+  "name": "node-ccxt-dumper",
+  "version": "1.0.13",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "repl": "dotenv -e .env -- npm run build && node -e \"import('./scripts/repl.mjs')\" --interactive"
+  },
+  "files": [
+    "build"
+  ],
+  "author": "Petr Tripolsky",
+  "license": "MIT",
+  "description": "LLM Trading backtest kit",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@rollup/plugin-typescript": "11.1.6",
+    "@types/lodash-es": "4.17.12",
+    "rollup": "3.29.4",
+    "tslib": "2.8.1",
+    "@types/stack-trace": "0.0.33",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "stack-trace": "1.0.0-pre2",
+    "di-factory": "1.0.9",
+    "backtest-kit": "1.1.3",
+    "dayjs": "1.11.13",
+    "ccxt": "4.5.20",
+    "di-kit": "1.0.18",
+    "mongoose": "8.13.2",
+    "functools-kit": "1.0.93",
+    "lodash-es": "4.17.21",
+    "pinolog": "1.0.5",
+    "trading-signals": "6.9.1"
+  }
+}
