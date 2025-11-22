@@ -142,6 +142,7 @@ Create a `.env` file in the same directory as `docker-compose.yaml`:
 
 ```bash
 CC_MONGO_CONNECTION_STRING=mongodb://host.docker.internal:27017/node-ccxt-dumper?wtimeoutMS=15000
+CC_SYMBOL_LIST=BTCUSDT,ETHUSDT,SOLUSDT,XRPUSDT,BNBUSDT
 ```
 
 ### Docker Image Details

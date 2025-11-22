@@ -7,12 +7,11 @@ import ShortTermHistoryService from "../history/ShortTermHistoryService";
 import SwingTermHistoryService from "../history/SwingTermHistoryService";
 import LongTermHistoryService from "../history/LongTermHistoryService";
 import MicroTermHistoryService from "../history/MicroTermHistoryService";
+import { CC_SYMBOL_LIST } from "../../../config/params";
 
 const JOB_INTERVAL = 30 * 1_000;
 
-const SYMBOL_LIST = [
-
-];
+const SYMBOL_LIST = CC_SYMBOL_LIST.split(",").map((symbol) => symbol.trim());
 
 export class CommonJobService {
   private readonly bootstrapService = inject<BootstrapService>(
