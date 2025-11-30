@@ -304,10 +304,17 @@ Error response:
 Fetch candle data with database caching. This endpoint automatically caches candles in MongoDB to reduce exchange API calls.
 
 **Query Parameters:**
-- `symbol` - Trading pair (e.g., `BTCUSDT`)
-- `interval` - Candle interval (`1m`, `3m`, `5m`, `15m`, `30m`, `1h`, `2h`, `4h`, `6h`, `8h`)
-- `limit` - Number of candles to fetch (default: `100`)
-- `since` - Unix timestamp in milliseconds (default: `0`)
+- `symbol` (required) - Trading pair (e.g., `BTCUSDT`)
+- `interval` (required) - Candle interval (`1m`, `3m`, `5m`, `15m`, `30m`, `1h`, `2h`, `4h`, `6h`, `8h`)
+- `limit` (optional) - Number of candles to fetch (default: `100`)
+- `when` (optional) - Unix timestamp in milliseconds representing the end time. The endpoint will fetch `limit` candles ending at this time (default: `Date.now()`)
+- `since` (optional) - Unix timestamp in milliseconds representing the start time. If provided, takes priority over `when`
+
+**Parameter Priority:**
+1. If `since` is provided → uses it directly as the start timestamp
+2. If `since` is NOT provided:
+   - If `when` is provided → calculates `since` from `when` by subtracting the time for `limit` candles
+   - If `when` is NOT provided → uses `Date.now()` as default and calculates `since` accordingly
 
 **Caching Strategy:**
 - First checks MongoDB for cached candles matching the request
@@ -315,13 +322,19 @@ Fetch candle data with database caching. This endpoint automatically caches cand
 - Otherwise, fetches from exchange API and saves to database
 - Prevents duplicate entries using `findByFilter` check
 
-**Example:**
+**Examples:**
 ```bash
-# Fetch 100 hourly candles for BTCUSDT
+# Fetch last 100 hourly candles ending at current time (default behavior)
+curl "http://localhost:30050/exchange/candles?symbol=BTCUSDT&interval=1h&limit=100"
+
+# Fetch last 100 hourly candles ending at specific time (using when)
+curl "http://localhost:30050/exchange/candles?symbol=BTCUSDT&interval=1h&limit=100&when=1640000000000"
+
+# Fetch candles starting from specific timestamp (using since)
 curl "http://localhost:30050/exchange/candles?symbol=BTCUSDT&interval=1h&limit=100&since=1640000000000"
 
-# Fetch 50 15-minute candles for ETHUSDT
-curl "http://localhost:30050/exchange/candles?symbol=ETHUSDT&interval=15m&limit=50&since=1640000000000"
+# Fetch 50 15-minute candles for ETHUSDT ending now
+curl "http://localhost:30050/exchange/candles?symbol=ETHUSDT&interval=15m&limit=50"
 ```
 
 **Response:**
@@ -354,9 +367,18 @@ Same as GET endpoint but accepts JSON body with all parameters.
   "symbol": "BTCUSDT",
   "interval": "1h",
   "limit": 100,
-  "since": 1640000000000
+  "when": 1640000000000
 }
 ```
+
+**Body Parameters:**
+- `requestId` (required) - Unique request identifier
+- `serviceName` (required) - Name of the calling service
+- `symbol` (required) - Trading pair (e.g., `BTCUSDT`)
+- `interval` (required) - Candle interval
+- `limit` (optional) - Number of candles (default: `100`)
+- `when` (optional) - End timestamp in milliseconds (default: `Date.now()`)
+- `since` (optional) - Start timestamp in milliseconds (takes priority over `when`)
 
 ### View API (Database Query with Pagination)
 
@@ -666,13 +688,25 @@ All endpoints accept symbols in Binance format (without slash): `BASEQUOTE`, for
 const symbol = 'BTCUSDT';
 const interval = '1h';
 const limit = 100;
-const since = Date.now() - 7 * 24 * 60 * 60 * 1000; // 7 days ago
 
-const response = await fetch(
+// Example 1: Get last 100 candles ending at current time (default)
+const response1 = await fetch(
+  `http://localhost:30050/exchange/candles?symbol=${symbol}&interval=${interval}&limit=${limit}`
+);
+
+// Example 2: Get last 100 candles ending at specific time
+const when = Date.now() - 24 * 60 * 60 * 1000; // 24 hours ago
+const response2 = await fetch(
+  `http://localhost:30050/exchange/candles?symbol=${symbol}&interval=${interval}&limit=${limit}&when=${when}`
+);
+
+// Example 3: Get candles starting from specific timestamp
+const since = Date.now() - 7 * 24 * 60 * 60 * 1000; // 7 days ago
+const response3 = await fetch(
   `http://localhost:30050/exchange/candles?symbol=${symbol}&interval=${interval}&limit=${limit}&since=${since}`
 );
 
-const result = await response.json();
+const result = await response1.json();
 
 if (result.status === 'ok') {
   console.log('Received candles:', result.data.length);

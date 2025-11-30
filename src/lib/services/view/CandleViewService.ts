@@ -13,6 +13,19 @@ import { TYPES } from "../../../lib/core/types";
 import { log } from "pinolog";
 import CandleDataDbService from "../db/CandleDataDbService";
 
+const INTERVAL_MINUTES: Record<CandleInterval, number> = {
+  "1m": 1,
+  "3m": 3,
+  "5m": 5,
+  "15m": 15,
+  "30m": 30,
+  "1h": 60,
+  "2h": 120,
+  "4h": 240,
+  "6h": 360,
+  "8h": 480,
+};
+
 const VALIDATE_NO_INCOMPLETE_CANDLES_FN = (candles: ICandleData[]): void => {
   if (candles.length === 0) {
     return;
@@ -143,6 +156,28 @@ const GET_CANDLES_FN = async (
 export class CandleViewService {
   private readonly candleDataDbService: CandleDataDbService =
     inject<CandleDataDbService>(TYPES.candleDataDbService);
+
+  public getSince = async (dto: {
+    interval: CandleInterval;
+    limit: number;
+    when: number;
+  }) => {
+    log("candleViewService getSince", { dto });
+    if (!dto.limit) {
+      throw new Error(`candleViewService getSince: limit is required`);
+    }
+    const step = INTERVAL_MINUTES[dto.interval];
+    if (step === undefined) {
+      throw new Error(`candleViewService getSince: unknown interval ${dto.interval}`);
+    }
+    const adjust = step * dto.limit - step;
+    if (!isFinite(adjust) || adjust < 0) {
+      throw new Error(
+        `candleViewService getSince: cannot calculate adjust for interval=${dto.interval}, limit=${dto.limit}`
+      );
+    }
+    return dto.when - adjust * 60 * 1000;
+  }
 
   public getCandles = async (
     symbol: string,
