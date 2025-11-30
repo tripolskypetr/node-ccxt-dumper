@@ -447,6 +447,87 @@ Query micro-term (2-minute) analysis data with pagination.
 curl "http://localhost:30050/view/micro-term?symbol=SOLUSDT&limit=100&offset=0"
 ```
 
+### View Range API (Date Range Query with Pagination)
+
+Range endpoints allow querying analysis data within specific date ranges. All timeframes support range queries.
+
+#### GET `/view/long-term-range`
+#### POST `/view/long-term-range`
+Query long-term analysis data within a date range.
+
+**Query Parameters (GET):**
+- `symbol` (required) - Trading pair (e.g., `BTCUSDT`)
+- `startDate` (required) - Start of date range in Unix timestamp milliseconds
+- `endDate` (required) - End of date range in Unix timestamp milliseconds
+- `limit` (optional) - Number of records to fetch (default: `100`)
+- `offset` (optional) - Number of records to skip (default: `0`)
+
+**Example (GET):**
+```bash
+# Get BTCUSDT data from last 7 days
+curl "http://localhost:30050/view/long-term-range?symbol=BTCUSDT&startDate=1640000000000&endDate=1640604800000&limit=50&offset=0"
+```
+
+**Request Body (POST):**
+```json
+{
+  "requestId": "unique-request-id",
+  "serviceName": "service-name",
+  "symbol": "BTCUSDT",
+  "startDate": 1640000000000,
+  "endDate": 1640604800000,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+**Response:**
+```json
+{
+  "data": {
+    "rows": [
+      {
+        "id": "...",
+        "symbol": "BTCUSDT",
+        "rsi14": 65.5,
+        "date": "2024-01-15T10:00:00.000Z"
+      }
+    ],
+    "total": 42
+  },
+  "status": "ok",
+  "error": "",
+  "requestId": "auto-generated-id"
+}
+```
+
+#### GET `/view/swing-term-range`
+#### POST `/view/swing-term-range`
+Query swing-term (15-minute) analysis data within a date range.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/swing-term-range?symbol=ETHUSDT&startDate=1640000000000&endDate=1640604800000"
+```
+
+#### GET `/view/short-term-range`
+#### POST `/view/short-term-range`
+Query short-term (5-minute) analysis data within a date range.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/short-term-range?symbol=BNBUSDT&startDate=1640000000000&endDate=1640604800000"
+```
+
+#### GET `/view/micro-term-range`
+#### POST `/view/micro-term-range`
+Query micro-term (2-minute) analysis data within a date range.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/micro-term-range?symbol=SOLUSDT&startDate=1640000000000&endDate=1640604800000"
+```
+
 ### Analytical Reports (Math Services)
 
 All analytical endpoints are available in both POST and GET versions.
