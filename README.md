@@ -744,7 +744,59 @@ The project uses environment variables for configuration:
 ```bash
 # .env file
 CC_MONGO_CONNECTION_STRING=mongodb://localhost:27017/node-ccxt-dumper?wtimeoutMS=15000
+CC_SYMBOL_LIST=BTCUSDT,ETHUSDT,SOLUSDT,XRPUSDT,BNBUSDT
+CC_GET_CANDLES_MIN_CANDLES_FOR_MEDIAN=20
+CC_GET_CANDLES_PRICE_ANOMALY_THRESHOLD_FACTOR=1000
+CC_GET_CANDLES_RETRY_COUNT=3
+CC_GET_CANDLES_RETRY_DELAY_MS=5000
+CC_AVG_PRICE_CANDLES_COUNT=5
 ```
+
+### Environment Variables
+
+#### Basic Configuration
+
+- **CC_MONGO_CONNECTION_STRING** (default: `mongodb://localhost:27017/node-ccxt-dumper?wtimeoutMS=15000`)
+  - MongoDB connection string
+  - Used for storing candle data and analysis results
+
+- **CC_SYMBOL_LIST** (default: `BTCUSDT,ETHUSDT,SOLUSDT,XRPUSDT,BNBUSDT`)
+  - Comma-separated list of trading symbols to monitor
+  - Format: BASE+QUOTE without slash (e.g., BTCUSDT, not BTC/USDT)
+
+#### Data Quality & Validation Parameters
+
+- **CC_GET_CANDLES_MIN_CANDLES_FOR_MEDIAN** (default: `20`)
+  - Minimum number of candles required to use median instead of average for reference price calculation
+  - Used in candle validation to detect incomplete/corrupted data
+  - If candles ≥ 20: uses median (more reliable statistics)
+  - If candles < 20: uses average (more stable for small datasets)
+
+- **CC_GET_CANDLES_PRICE_ANOMALY_THRESHOLD_FACTOR** (default: `1000`)
+  - Factor to detect anomalously low prices (incomplete candles indicator)
+  - Minimum valid price = `referencePrice / threshold_factor`
+  - Example: if BTC reference price = 50,000 USD, minimum valid price = 50 USD
+  - Protects against corrupted exchange data and incomplete candles
+
+#### Retry & Reliability Parameters
+
+- **CC_GET_CANDLES_RETRY_COUNT** (default: `3`)
+  - Number of retry attempts when fetching candles from exchange fails
+  - Handles network issues, rate limits, and temporary exchange API problems
+  - After all retries fail, the last error is thrown
+
+- **CC_GET_CANDLES_RETRY_DELAY_MS** (default: `5000`)
+  - Delay in milliseconds between retry attempts
+  - Prevents excessive load on exchange API during issues
+  - Gives exchange API time to recover from temporary failures
+
+#### Market Price Calculation
+
+- **CC_AVG_PRICE_CANDLES_COUNT** (default: `5`)
+  - Number of recent 1-minute candles used to calculate market price (VWAP)
+  - Used in `ExchangeService.getMarketPrice()` method
+  - Calculates Volume Weighted Average Price using typical price: `(high + low + close) / 3 * volume`
+  - If total volume is zero, returns simple average of close prices
 
 ### Default Configuration
 
@@ -759,6 +811,17 @@ The exchange configuration is defined in [src/config/ccxt.ts](src/config/ccxt.ts
 - `adjustForTimeDifference: true` - Automatic time synchronization
 - `recvWindow: 60000` - Request receive window
 - `enableRateLimit: true` - Rate limiting protection
+
+### Data Quality Assurance
+
+The system implements comprehensive candle validation ([src/lib/services/view/CandleViewService.ts](src/lib/services/view/CandleViewService.ts)):
+
+1. **Reference Price Calculation**: Uses median (for ≥20 candles) or average (for <20 candles)
+2. **Numeric Validation**: Checks for NaN and Infinity values
+3. **Range Validation**: Ensures all prices are positive (OHLC > 0, volume ≥ 0)
+4. **Anomaly Detection**: Detects incomplete candles with anomalously low prices
+
+This multi-layer validation ensures high-quality data before technical indicator calculation.
 
 ## Candle Data Structure
 
