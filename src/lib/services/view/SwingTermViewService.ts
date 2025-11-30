@@ -31,6 +31,41 @@ export class SwingTermViewService {
 
     return result;
   };
+
+  public getRange = async (
+    symbol: string,
+    startDate: number,
+    endDate: number,
+    limit: number = 100,
+    offset: number = 0
+  ) => {
+    log("swingTermViewService getRange called", {
+      symbol,
+      startDate,
+      endDate,
+      limit,
+      offset,
+    });
+
+    const result = await this.swingTermDbService.paginate(
+      {
+        symbol,
+        date: {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
+        },
+      },
+      { limit, offset },
+      { date: -1 }
+    );
+
+    log("swingTermViewService returning range data", {
+      count: result.rows.length,
+      total: result.total,
+    });
+
+    return result;
+  };
 }
 
 export default SwingTermViewService;
