@@ -482,3 +482,114 @@ app.get("/view/long-term-range", async (ctx) => {
     console.timeEnd(`/view/long-term-range GET ${requestId}`);
   }
 });
+
+// Swing Term Range endpoints
+app.post("/view/swing-term-range", async (ctx) => {
+  const request = await ctx.req.json<GetRangeRequest>();
+  console.time(`/view/swing-term-range POST ${request.requestId}`);
+  try {
+    const data = await signal.swingTermViewService.getRange(request.symbol, request.startDate, request.endDate, request.limit, request.offset);
+    logger.log("/view/swing-term-range POST ok", { request });
+    return ctx.json({ data, status: "ok", error: "", requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } catch (error) {
+    logger.log("/view/swing-term-range POST error", { request, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } finally {
+    console.timeEnd(`/view/swing-term-range POST ${request.requestId}`);
+  }
+});
+
+app.get("/view/swing-term-range", async (ctx) => {
+  const requestId = generateRequestId();
+  const symbol = ctx.req.query("symbol");
+  const startDate = parseInt(ctx.req.query("startDate") || "0", 10);
+  const endDate = parseInt(ctx.req.query("endDate") || String(Date.now()), 10);
+  const limit = parseInt(ctx.req.query("limit") || "100", 10);
+  const offset = parseInt(ctx.req.query("offset") || "0", 10);
+  console.time(`/view/swing-term-range GET ${requestId}`);
+  logger.log("/view/swing-term-range GET called", { requestId, symbol, startDate, endDate, limit, offset });
+  try {
+    const data = await signal.swingTermViewService.getRange(symbol, startDate, endDate, limit, offset);
+    logger.log("/view/swing-term-range GET ok", { requestId, symbol });
+    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+  } catch (error) {
+    logger.log("/view/swing-term-range GET error", { requestId, symbol, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+  } finally {
+    console.timeEnd(`/view/swing-term-range GET ${requestId}`);
+  }
+});
+
+// Short Term Range endpoints
+app.post("/view/short-term-range", async (ctx) => {
+  const request = await ctx.req.json<GetRangeRequest>();
+  console.time(`/view/short-term-range POST ${request.requestId}`);
+  try {
+    const data = await signal.shortTermViewService.getRange(request.symbol, request.startDate, request.endDate, request.limit, request.offset);
+    logger.log("/view/short-term-range POST ok", { request });
+    return ctx.json({ data, status: "ok", error: "", requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } catch (error) {
+    logger.log("/view/short-term-range POST error", { request, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } finally {
+    console.timeEnd(`/view/short-term-range POST ${request.requestId}`);
+  }
+});
+
+app.get("/view/short-term-range", async (ctx) => {
+  const requestId = generateRequestId();
+  const symbol = ctx.req.query("symbol");
+  const startDate = parseInt(ctx.req.query("startDate") || "0", 10);
+  const endDate = parseInt(ctx.req.query("endDate") || String(Date.now()), 10);
+  const limit = parseInt(ctx.req.query("limit") || "100", 10);
+  const offset = parseInt(ctx.req.query("offset") || "0", 10);
+  console.time(`/view/short-term-range GET ${requestId}`);
+  logger.log("/view/short-term-range GET called", { requestId, symbol, startDate, endDate, limit, offset });
+  try {
+    const data = await signal.shortTermViewService.getRange(symbol, startDate, endDate, limit, offset);
+    logger.log("/view/short-term-range GET ok", { requestId, symbol });
+    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+  } catch (error) {
+    logger.log("/view/short-term-range GET error", { requestId, symbol, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+  } finally {
+    console.timeEnd(`/view/short-term-range GET ${requestId}`);
+  }
+});
+
+// Micro Term Range endpoints
+app.post("/view/micro-term-range", async (ctx) => {
+  const request = await ctx.req.json<GetRangeRequest>();
+  console.time(`/view/micro-term-range POST ${request.requestId}`);
+  try {
+    const data = await signal.microTermViewService.getRange(request.symbol, request.startDate, request.endDate, request.limit, request.offset);
+    logger.log("/view/micro-term-range POST ok", { request });
+    return ctx.json({ data, status: "ok", error: "", requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } catch (error) {
+    logger.log("/view/micro-term-range POST error", { request, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId: request.requestId, serviceName: request.serviceName }, 200);
+  } finally {
+    console.timeEnd(`/view/micro-term-range POST ${request.requestId}`);
+  }
+});
+
+app.get("/view/micro-term-range", async (ctx) => {
+  const requestId = generateRequestId();
+  const symbol = ctx.req.query("symbol");
+  const startDate = parseInt(ctx.req.query("startDate") || "0", 10);
+  const endDate = parseInt(ctx.req.query("endDate") || String(Date.now()), 10);
+  const limit = parseInt(ctx.req.query("limit") || "100", 10);
+  const offset = parseInt(ctx.req.query("offset") || "0", 10);
+  console.time(`/view/micro-term-range GET ${requestId}`);
+  logger.log("/view/micro-term-range GET called", { requestId, symbol, startDate, endDate, limit, offset });
+  try {
+    const data = await signal.microTermViewService.getRange(symbol, startDate, endDate, limit, offset);
+    logger.log("/view/micro-term-range GET ok", { requestId, symbol });
+    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+  } catch (error) {
+    logger.log("/view/micro-term-range GET error", { requestId, symbol, error: errorData(error) });
+    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+  } finally {
+    console.timeEnd(`/view/micro-term-range GET ${requestId}`);
+  }
+});
