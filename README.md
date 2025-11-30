@@ -51,19 +51,70 @@ src/
 - **DI Container**: di-kit 1.0
 - **Utilities**: functools-kit, dayjs, lodash-es
 
-## Installation
+## Installation & Setup
 
-```bash
-npm install node-ccxt-dumper
-```
+There are two main ways to run the application:
 
-## Build
+### Option 1: Docker Deployment (Recommended for Production)
 
-```bash
-npm run build
-```
+See the [Docker Deployment](#docker-deployment) section below for detailed instructions using:
+- `config/docker-compose.yaml` - Host network mode (recommended)
+- `docker/ccxt-dumper/docker-compose.yaml` - Port mapping mode
 
-The build is performed using Rollup and creates a bundle in the `build/` directory.
+### Option 2: Local Development Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/tripolskypetr/node-ccxt-dumper.git
+   cd node-ccxt-dumper
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env file with your MongoDB connection and symbol list
+   ```
+
+4. **Build the project**
+   ```bash
+   npm run build
+   ```
+
+   The build is performed using Rollup and creates a bundle in the `build/` directory.
+
+5. **Setup MongoDB indexes** (required for optimal performance)
+
+   Start the REPL console:
+   ```bash
+   npm run start:repl
+   ```
+
+   Create indexes in the REPL:
+   ```javascript
+   signal.mongoService.restoreIndexes()
+   ```
+
+   Expected output:
+   ```
+   Created index symbol_1_date_-1 on short-term-items
+   Created index symbol_1_date_-1 on swing-term-items
+   Created index symbol_1_date_-1 on long-term-items
+   Created index symbol_1_date_-1 on micro-term-items
+   Created index symbol_1_interval_1_timestamp_-1 on candle-data-items
+   ```
+
+**Why indexes are important:**
+- Dramatically improves query performance for symbol-based lookups
+- Enables fast time-range queries on candle data
+- Optimizes pagination in view endpoints
+- Essential for handling large historical datasets
+
+**Note:** Indexes are created automatically on first use, but running `restoreIndexes()` ensures all required indexes exist before starting the service.
 
 ## Docker Deployment
 
