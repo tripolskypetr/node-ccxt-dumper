@@ -6,3 +6,4 @@ export const CC_GET_CANDLES_MIN_CANDLES_FOR_MEDIAN  = parseInt(process.env.CC_GE
 export const CC_GET_CANDLES_PRICE_ANOMALY_THRESHOLD_FACTOR = parseInt(process.env.CC_GET_CANDLES_PRICE_ANOMALY_THRESHOLD_FACTOR) || 1_000;
 export const CC_GET_CANDLES_RETRY_COUNT = parseInt(process.env.CC_GET_CANDLES_RETRY_COUNT) || 3;
 export const CC_GET_CANDLES_RETRY_DELAY_MS = parseInt(process.env.CC_GET_CANDLES_RETRY_DELAY_MS) || 5_000;
+export const CC_AVG_PRICE_CANDLES_COUNT = parseInt(process.env.CC_AVG_PRICE_CANDLES_COUNT) || 5;

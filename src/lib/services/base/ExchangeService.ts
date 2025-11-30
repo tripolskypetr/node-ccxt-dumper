@@ -1,5 +1,6 @@
 import { log } from "pinolog";
 import { getExchange } from "../../../config/ccxt";
+import { CC_AVG_PRICE_CANDLES_COUNT } from "../../../config/params";
 
 type CandleInterval = "1m" | "3m" | "5m" | "15m" | "30m" | "1h" | "2h" | "4h" | "6h" | "8h";
 
@@ -75,12 +76,15 @@ export class ExchangeService {
     log(`exchangeService getAveragePrice`, {
       symbol,
     });
-
-    const candles = await this.getCandles(symbol, "1m", 5);
+    const candles = await this.getCandles(
+      symbol,
+      "1m",
+      CC_AVG_PRICE_CANDLES_COUNT
+    );
 
     if (candles.length === 0) {
       throw new Error(
-        `ClientExchange getAveragePrice: no candles data for symbol=${symbol}`
+        `exchangeService getAveragePrice: no candles data for symbol=${symbol}`
       );
     }
 

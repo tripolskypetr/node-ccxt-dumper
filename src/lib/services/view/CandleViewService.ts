@@ -9,7 +9,7 @@ import {
 import ICandleData from "../../../model/Candle.model";
 import { CandleInterval } from "../../../model/CandleInterval.model";
 import { inject } from "../../core/di";
-import { TYPES } from "src/lib/core/types";
+import { TYPES } from "../../../lib/core/types";
 import { log } from "pinolog";
 import CandleDataDbService from "../db/CandleDataDbService";
 
