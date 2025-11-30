@@ -307,6 +307,73 @@ Same as GET endpoint but accepts JSON body with all parameters.
 }
 ```
 
+### View API (Database Query with Pagination)
+
+View endpoints provide direct access to stored analysis data from MongoDB with pagination support.
+
+#### GET `/view/long-term`
+#### POST `/view/long-term`
+Query long-term analysis data from database with pagination.
+
+**Query Parameters (GET):**
+- `symbol` - Trading pair (e.g., `BTCUSDT`)
+- `limit` - Number of records to fetch (default: `100`)
+- `offset` - Number of records to skip (default: `0`)
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/long-term?symbol=BTCUSDT&limit=50&offset=0"
+```
+
+**Response:**
+```json
+{
+  "data": {
+    "rows": [
+      {
+        "id": "...",
+        "symbol": "BTCUSDT",
+        "rsi14": 65.5,
+        "macd12_26_9": 120.3,
+        "currentPrice": 46500.0,
+        "date": "2024-01-15T10:00:00.000Z"
+      }
+    ],
+    "total": 150
+  },
+  "status": "ok",
+  "error": "",
+  "requestId": "auto-generated-id"
+}
+```
+
+#### GET `/view/swing-term`
+#### POST `/view/swing-term`
+Query swing-term (15-minute) analysis data with pagination.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/swing-term?symbol=ETHUSDT&limit=100&offset=0"
+```
+
+#### GET `/view/short-term`
+#### POST `/view/short-term`
+Query short-term (5-minute) analysis data with pagination.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/short-term?symbol=BNBUSDT&limit=100&offset=0"
+```
+
+#### GET `/view/micro-term`
+#### POST `/view/micro-term`
+Query micro-term (2-minute) analysis data with pagination.
+
+**Example (GET):**
+```bash
+curl "http://localhost:30050/view/micro-term?symbol=SOLUSDT&limit=100&offset=0"
+```
+
 ### Analytical Reports (Math Services)
 
 All analytical endpoints are available in both POST and GET versions.
@@ -723,6 +790,10 @@ All requests are logged using the `pinolog` library. Logs include:
 **Log Files:**
 - `http_export.log` - All export endpoints (analysis and history)
 - `http_exchange.log` - Exchange API candle requests with caching
+- `http_view_long_term.log` - Long-term view queries
+- `http_view_swing_term.log` - Swing-term view queries
+- `http_view_short_term.log` - Short-term view queries
+- `http_view_micro_term.log` - Micro-term view queries
 
 ## Performance
 

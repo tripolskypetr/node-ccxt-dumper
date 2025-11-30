@@ -47,6 +47,10 @@ import CommonJobService from "./services/job/CommonJobService";
 
 // View services
 import CandleViewService from "./services/view/CandleViewService";
+import LongTermViewService from "./services/view/LongTermViewService";
+import MicroTermViewService from "./services/view/MicroTermViewService";
+import ShortTermViewService from "./services/view/ShortTermViewService";
+import SwingTermViewService from "./services/view/SwingTermViewService";
 
 // Base services
 const baseServices = {
@@ -105,6 +109,10 @@ const jobServices = {
 // View services
 const viewServices = {
     candleViewService: inject<CandleViewService>(TYPES.candleViewService),
+    longTermViewService: inject<LongTermViewService>(TYPES.longTermViewService),
+    microTermViewService: inject<MicroTermViewService>(TYPES.microTermViewService),
+    shortTermViewService: inject<ShortTermViewService>(TYPES.shortTermViewService),
+    swingTermViewService: inject<SwingTermViewService>(TYPES.swingTermViewService),
 }
 
 const signal = {

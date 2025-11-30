@@ -42,6 +42,10 @@ import CommonJobService from "../services/job/CommonJobService";
 
 // View services
 import CandleViewService from "../services/view/CandleViewService";
+import LongTermViewService from "../services/view/LongTermViewService";
+import MicroTermViewService from "../services/view/MicroTermViewService";
+import ShortTermViewService from "../services/view/ShortTermViewService";
+import SwingTermViewService from "../services/view/SwingTermViewService";
 
 import { provide } from "./di";
 import { TYPES } from "./types";
@@ -103,4 +107,8 @@ import { TYPES } from "./types";
 // View services
 {
     provide(TYPES.candleViewService, () => new CandleViewService());
+    provide(TYPES.longTermViewService, () => new LongTermViewService());
+    provide(TYPES.microTermViewService, () => new MicroTermViewService());
+    provide(TYPES.shortTermViewService, () => new ShortTermViewService());
+    provide(TYPES.swingTermViewService, () => new SwingTermViewService());
 }

@@ -55,6 +55,10 @@ const jobServices = {
 // View services
 const viewServices = {
     candleViewService: Symbol.for('candleViewService'),
+    longTermViewService: Symbol.for('longTermViewService'),
+    microTermViewService: Symbol.for('microTermViewService'),
+    shortTermViewService: Symbol.for('shortTermViewService'),
+    swingTermViewService: Symbol.for('swingTermViewService'),
 }
 
 export const TYPES = {

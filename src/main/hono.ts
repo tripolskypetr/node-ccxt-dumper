@@ -6,6 +6,10 @@ import { createServer } from "http";
 import "../routes/exchange";
 import "../routes/export";
 import "../routes/health";
+import "../routes/view-long-term";
+import "../routes/view-micro-term";
+import "../routes/view-short-term";
+import "../routes/view-swing-term";
 
 import signal from "../lib";
 
