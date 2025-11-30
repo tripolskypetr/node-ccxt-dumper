@@ -36,7 +36,7 @@ src/
 │   └── common/            # Common utilities (BaseCRUD)
 ├── model/                 # Data models (ICandleData)
 ├── schema/                # Mongoose schemas
-├── routes/                # HTTP routes (export.ts)
+├── routes/                # HTTP routes (export.ts, view.ts, exchange.ts)
 └── config/                # Configuration (app, ccxt, mongo)
 ```
 
@@ -790,10 +790,7 @@ All requests are logged using the `pinolog` library. Logs include:
 **Log Files:**
 - `http_export.log` - All export endpoints (analysis and history)
 - `http_exchange.log` - Exchange API candle requests with caching
-- `http_view_long_term.log` - Long-term view queries
-- `http_view_swing_term.log` - Swing-term view queries
-- `http_view_short_term.log` - Short-term view queries
-- `http_view_micro_term.log` - Micro-term view queries
+- `http_view.log` - All view endpoints (long-term, swing-term, short-term, micro-term)
 
 ## Performance
 
