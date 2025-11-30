@@ -50,7 +50,6 @@ yarn-error.log*
 .idea
 yarn.lock
 
-.env*
 dist/
 src/tools/binance-spot/a.sh
 a.sh
