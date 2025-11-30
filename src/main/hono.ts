@@ -3,6 +3,7 @@ import { app, injectWebSocket } from "../config/app";
 
 import { createServer } from "http";
 
+import "../routes/exchange";
 import "../routes/export";
 import "../routes/health";
 

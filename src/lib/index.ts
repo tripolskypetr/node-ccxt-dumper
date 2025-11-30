@@ -30,6 +30,7 @@ import LongTermDbService from "./services/db/LongTermDbService";
 import MicroTermDbService from "./services/db/MicroTermDbService";
 import ShortTermDbService from "./services/db/ShortTermDbService";
 import SwingTermDbService from "./services/db/SwingTermDbService";
+import CandleDataDbService from "./services/db/CandleDataDbService";
 
 // History services
 import FifteenMinuteCandleHistoryService from "./services/history/FifteenMinuteCandleHistoryService";
@@ -43,6 +44,9 @@ import ThirtyMinuteCandleHistoryService from "./services/history/ThirtyMinuteCan
 
 // Job services
 import CommonJobService from "./services/job/CommonJobService";
+
+// View services
+import CandleViewService from "./services/view/CandleViewService";
 
 // Base services
 const baseServices = {
@@ -74,6 +78,7 @@ const clientServices = {
 
 // DB services
 const dbServices = {
+    candleDataDbService: inject<CandleDataDbService>(TYPES.candleDataDbService),
     longTermDbService: inject<LongTermDbService>(TYPES.longTermDbService),
     microTermDbService: inject<MicroTermDbService>(TYPES.microTermDbService),
     shortTermDbService: inject<ShortTermDbService>(TYPES.shortTermDbService),
@@ -97,6 +102,11 @@ const jobServices = {
     commonJobService: inject<CommonJobService>(TYPES.commonJobService),
 }
 
+// View services
+const viewServices = {
+    candleViewService: inject<CandleViewService>(TYPES.candleViewService),
+}
+
 const signal = {
     ...baseServices,
     ...mathServices,
@@ -104,6 +114,7 @@ const signal = {
     ...dbServices,
     ...historyServices,
     ...jobServices,
+    ...viewServices,
 }
 
 init();

@@ -25,6 +25,7 @@ import LongTermDbService from "../services/db/LongTermDbService";
 import MicroTermDbService from "../services/db/MicroTermDbService";
 import ShortTermDbService from "../services/db/ShortTermDbService";
 import SwingTermDbService from "../services/db/SwingTermDbService";
+import CandleDataDbService from "../services/db/CandleDataDbService";
 
 // History services
 import FifteenMinuteCandleHistoryService from "../services/history/FifteenMinuteCandleHistoryService";
@@ -38,6 +39,9 @@ import ThirtyMinuteCandleHistoryService from "../services/history/ThirtyMinuteCa
 
 // Job services
 import CommonJobService from "../services/job/CommonJobService";
+
+// View services
+import CandleViewService from "../services/view/CandleViewService";
 
 import { provide } from "./di";
 import { TYPES } from "./types";
@@ -76,6 +80,7 @@ import { TYPES } from "./types";
     provide(TYPES.microTermDbService, () => new MicroTermDbService());
     provide(TYPES.shortTermDbService, () => new ShortTermDbService());
     provide(TYPES.swingTermDbService, () => new SwingTermDbService());
+    provide(TYPES.candleDataDbService, () => new CandleDataDbService());
 }
 
 // History services
@@ -93,4 +98,9 @@ import { TYPES } from "./types";
 // Job services
 {
     provide(TYPES.commonJobService, () => new CommonJobService());
+}
+
+// View services
+{
+    provide(TYPES.candleViewService, () => new CandleViewService());
 }

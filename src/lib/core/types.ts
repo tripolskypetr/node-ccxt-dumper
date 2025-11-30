@@ -32,6 +32,7 @@ const dbServices = {
     microTermDbService: Symbol.for('microTermDbService'),
     shortTermDbService: Symbol.for('shortTermDbService'),
     swingTermDbService: Symbol.for('swingTermDbService'),
+    candleDataDbService: Symbol.for('candleDataDbService'),
 }
 
 // History services
@@ -51,6 +52,11 @@ const jobServices = {
     commonJobService: Symbol.for('commonJobService'),
 }
 
+// View services
+const viewServices = {
+    candleViewService: Symbol.for('candleViewService'),
+}
+
 export const TYPES = {
     ...baseServices,
     ...mathServices,
@@ -58,4 +64,5 @@ export const TYPES = {
     ...dbServices,
     ...historyServices,
     ...jobServices,
+    ...viewServices,
 }
