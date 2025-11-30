@@ -201,7 +201,10 @@ docker ps
 
 ## API Endpoints
 
-All endpoints accept POST requests with body:
+The API provides two types of endpoints:
+
+### POST Endpoints (Production)
+Accept POST requests with body containing `requestId` and `serviceName`:
 
 ```json
 {
@@ -210,15 +213,27 @@ All endpoints accept POST requests with body:
 }
 ```
 
+### GET Endpoints (Simplified)
+Accept GET requests with query parameters (no requestId/serviceName required):
+
+```bash
+# For export endpoints - symbol is in URL path
+GET /export/long-term/BTCUSDT
+
+# For exchange endpoints - parameters are query strings
+GET /exchange/candles?symbol=BTCUSDT&interval=1h&limit=100&since=1234567890
+```
+
+**Response format:**
+
 Successful response:
 
 ```json
 {
-  "data": "...markdown report...",
+  "data": "...data or markdown report...",
   "status": "ok",
   "error": "",
-  "requestId": "unique-request-id",
-  "serviceName": "service-name"
+  "requestId": "auto-generated-id"
 }
 ```
 
@@ -228,14 +243,76 @@ Error response:
 {
   "status": "error",
   "error": "error message",
+  "requestId": "auto-generated-id"
+}
+```
+
+### Exchange API (Candle Data with Caching)
+
+#### GET `/exchange/candles`
+Fetch candle data with database caching. This endpoint automatically caches candles in MongoDB to reduce exchange API calls.
+
+**Query Parameters:**
+- `symbol` - Trading pair (e.g., `BTCUSDT`)
+- `interval` - Candle interval (`1m`, `3m`, `5m`, `15m`, `30m`, `1h`, `2h`, `4h`, `6h`, `8h`)
+- `limit` - Number of candles to fetch (default: `100`)
+- `since` - Unix timestamp in milliseconds (default: `0`)
+
+**Caching Strategy:**
+- First checks MongoDB for cached candles matching the request
+- If sufficient cached data exists, returns from database
+- Otherwise, fetches from exchange API and saves to database
+- Prevents duplicate entries using `findByFilter` check
+
+**Example:**
+```bash
+# Fetch 100 hourly candles for BTCUSDT
+curl "http://localhost:30050/exchange/candles?symbol=BTCUSDT&interval=1h&limit=100&since=1640000000000"
+
+# Fetch 50 15-minute candles for ETHUSDT
+curl "http://localhost:30050/exchange/candles?symbol=ETHUSDT&interval=15m&limit=50&since=1640000000000"
+```
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "timestamp": 1640000000000,
+      "open": 46000.5,
+      "high": 46500.0,
+      "low": 45800.0,
+      "close": 46200.0,
+      "volume": 1234.56
+    }
+  ],
+  "status": "ok",
+  "error": "",
+  "requestId": "auto-generated-id"
+}
+```
+
+#### POST `/exchange/candles`
+Same as GET endpoint but accepts JSON body with all parameters.
+
+**Request Body:**
+```json
+{
   "requestId": "unique-request-id",
-  "serviceName": "service-name"
+  "serviceName": "service-name",
+  "symbol": "BTCUSDT",
+  "interval": "1h",
+  "limit": 100,
+  "since": 1640000000000
 }
 ```
 
 ### Analytical Reports (Math Services)
 
+All analytical endpoints are available in both POST and GET versions.
+
 #### POST `/export/long-term/:symbol`
+#### GET `/export/long-term/:symbol`
 Long-term analysis on 1-hour timeframe (7 days history, 336 candles).
 
 **Includes:**
@@ -247,14 +324,20 @@ Long-term analysis on 1-hour timeframe (7 days history, 336 candles).
 - Patterns (reversal and continuation)
 - Last 15 candles with full data
 
-**Example:**
+**Example (POST):**
 ```bash
 curl -X POST http://localhost:30050/export/long-term/BTCUSDT \
   -H "Content-Type: application/json" \
   -d '{"requestId": "req-001", "serviceName": "trading-bot"}'
 ```
 
+**Example (GET):**
+```bash
+curl http://localhost:30050/export/long-term/BTCUSDT
+```
+
 #### POST `/export/swing-term/:symbol`
+#### GET `/export/swing-term/:symbol`
 Medium-term analysis on 15-minute timeframe (7 days history, 672 candles).
 
 **Includes:**
@@ -263,14 +346,13 @@ Medium-term analysis on 15-minute timeframe (7 days history, 672 candles).
 - RSI with period 14
 - Bollinger Bands (20)
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/swing-term/ETHUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-002", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/swing-term/ETHUSDT
 ```
 
 #### POST `/export/short-term/:symbol`
+#### GET `/export/short-term/:symbol`
 Short-term analysis on 5-minute timeframe (7 days history, 2016 candles).
 
 **Includes:**
@@ -280,14 +362,13 @@ Short-term analysis on 5-minute timeframe (7 days history, 2016 candles).
 - MACD (12/26/9)
 - Short-term pattern analysis
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/short-term/BNBUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-003", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/short-term/BNBUSDT
 ```
 
 #### POST `/export/micro-term/:symbol`
+#### GET `/export/micro-term/:symbol`
 Ultra-short-term analysis on 2-minute timeframe (3 days history, 2160 candles).
 
 **Includes:**
@@ -296,14 +377,13 @@ Ultra-short-term analysis on 2-minute timeframe (3 days history, 2160 candles).
 - Bollinger Bands (10)
 - Micro-patterns for high-frequency trading
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/micro-term/SOLUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-004", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/micro-term/SOLUSDT
 ```
 
 #### POST `/export/slope-data/:symbol`
+#### GET `/export/slope-data/:symbol`
 Analysis of slopes and trend lines.
 
 **Includes:**
@@ -312,14 +392,13 @@ Analysis of slopes and trend lines.
 - Rate of price change
 - Divergences between price and indicators
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/slope-data/ADAUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-005", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/slope-data/ADAUSDT
 ```
 
 #### POST `/export/volume-data/:symbol`
+#### GET `/export/volume-data/:symbol`
 Detailed trading volume analysis.
 
 **Includes:**
@@ -329,56 +408,53 @@ Detailed trading volume analysis.
 - Correlation between volume and price movement
 - Volume Rate of Change (VROC)
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/volume-data/XRPUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-006", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/volume-data/XRPUSDT
 ```
 
 ### Historical Data (History Services)
 
+All history endpoints are available in both POST and GET versions.
+
 #### POST `/export/history/one-minute/:symbol`
+#### GET `/export/history/one-minute/:symbol`
 History of 1-minute candles.
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/one-minute/BTCUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-007", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/one-minute/BTCUSDT
 ```
 
 #### POST `/export/history/fifteen-minute/:symbol`
+#### GET `/export/history/fifteen-minute/:symbol`
 History of 15-minute candles.
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/fifteen-minute/BTCUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-008", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/fifteen-minute/BTCUSDT
 ```
 
 #### POST `/export/history/thirty-minute/:symbol`
+#### GET `/export/history/thirty-minute/:symbol`
 History of 30-minute candles.
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/thirty-minute/BTCUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-009", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/thirty-minute/BTCUSDT
 ```
 
 #### POST `/export/history/hour/:symbol`
+#### GET `/export/history/hour/:symbol`
 History of hourly candles.
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/hour/BTCUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-010", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/hour/BTCUSDT
 ```
 
 #### POST `/export/history/long-term/:symbol`
+#### GET `/export/history/long-term/:symbol`
 History of long-term analyses (30-minute TTL, 7 days).
 
 **Includes:**
@@ -386,41 +462,36 @@ History of long-term analyses (30-minute TTL, 7 days).
 - Indicator change trends
 - Historical signals
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/long-term/BTCUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-011", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/long-term/BTCUSDT
 ```
 
 #### POST `/export/history/swing-term/:symbol`
+#### GET `/export/history/swing-term/:symbol`
 History of medium-term analyses (15-minute TTL, 7 days).
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/swing-term/ETHUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-012", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/swing-term/ETHUSDT
 ```
 
 #### POST `/export/history/short-term/:symbol`
+#### GET `/export/history/short-term/:symbol`
 History of short-term analyses (5-minute TTL, 7 days).
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/short-term/BNBUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-013", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/short-term/BNBUSDT
 ```
 
 #### POST `/export/history/micro-term/:symbol`
+#### GET `/export/history/micro-term/:symbol`
 History of ultra-short-term analyses (2-minute TTL, 3 days).
 
-**Example:**
+**Example (GET):**
 ```bash
-curl -X POST http://localhost:30050/export/history/micro-term/SOLUSDT \
-  -H "Content-Type: application/json" \
-  -d '{"requestId": "req-014", "serviceName": "trading-bot"}'
+curl http://localhost:30050/export/history/micro-term/SOLUSDT
 ```
 
 ## Symbol Format
@@ -471,7 +542,45 @@ All endpoints accept symbols in Binance format (without slash): `BASEQUOTE`, for
 
 ## Usage Examples
 
-### Getting long-term analysis for BTCUSDT
+### Getting candles with caching (GET)
+
+```javascript
+const symbol = 'BTCUSDT';
+const interval = '1h';
+const limit = 100;
+const since = Date.now() - 7 * 24 * 60 * 60 * 1000; // 7 days ago
+
+const response = await fetch(
+  `http://localhost:30050/exchange/candles?symbol=${symbol}&interval=${interval}&limit=${limit}&since=${since}`
+);
+
+const result = await response.json();
+
+if (result.status === 'ok') {
+  console.log('Received candles:', result.data.length);
+  console.log('First candle:', result.data[0]);
+} else {
+  console.error('Error:', result.error);
+}
+```
+
+### Getting long-term analysis (GET - Simplified)
+
+```javascript
+const response = await fetch('http://localhost:30050/export/long-term/BTCUSDT');
+
+const result = await response.json();
+
+if (result.status === 'ok') {
+  console.log('Long-term analysis report:');
+  console.log(result.data); // Markdown-formatted report
+  console.log('Request ID:', result.requestId); // Auto-generated
+} else {
+  console.error('Error:', result.error);
+}
+```
+
+### Getting long-term analysis (POST - Production)
 
 ```javascript
 const response = await fetch('http://localhost:30050/export/long-term/BTCUSDT', {
@@ -495,7 +604,38 @@ if (result.status === 'ok') {
 }
 ```
 
-### Batch fetching all timeframes
+### Batch fetching all timeframes (GET - Simplified)
+
+```javascript
+const symbol = 'ETHUSDT';
+
+const endpoints = [
+  '/export/long-term',
+  '/export/swing-term',
+  '/export/short-term',
+  '/export/micro-term',
+  '/export/volume-data',
+  '/export/slope-data'
+];
+
+const results = await Promise.all(
+  endpoints.map(endpoint =>
+    fetch(`http://localhost:30050${endpoint}/${symbol}`).then(r => r.json())
+  )
+);
+
+results.forEach((result, i) => {
+  console.log(`\n=== ${endpoints[i]} ===`);
+  if (result.status === 'ok') {
+    console.log(result.data);
+    console.log('Request ID:', result.requestId); // Auto-generated
+  } else {
+    console.error('Error:', result.error);
+  }
+});
+```
+
+### Batch fetching all timeframes (POST - Production)
 
 ```javascript
 const symbol = 'ETHUSDT';
@@ -574,15 +714,24 @@ interface ICandleData {
 
 ## Logging
 
-All requests are logged to `http_export.log` file using the `pinolog` library. Logs include:
-- Incoming requests (requestId, serviceName, symbol)
+All requests are logged using the `pinolog` library. Logs include:
+- Incoming requests (requestId, serviceName, symbol, parameters)
 - Successful responses
 - Errors with full stack traces
 - Execution time for each request (console.time/timeEnd)
 
+**Log Files:**
+- `http_export.log` - All export endpoints (analysis and history)
+- `http_exchange.log` - Exchange API candle requests with caching
+
 ## Performance
 
 - **TTL Caching**: Analysis results are cached for the TTL period to reduce exchange load
+- **Database Caching**: Candle data is cached in MongoDB to minimize exchange API calls
+- **Smart Cache Strategy**:
+  - Checks database first for existing candles
+  - Only fetches missing data from exchange
+  - Prevents duplicate entries with `findByFilter` validation
 - **Parallel Requests**: Ability to process multiple requests simultaneously
 - **Optimized Periods**: Each timeframe uses optimal periods for indicators
 
