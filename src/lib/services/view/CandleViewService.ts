@@ -193,7 +193,7 @@ export class CandleViewService {
     });
 
     // Try to get candles from database
-    const cachedCandles = await this.candleDataDbService.findAll(
+    const rawCachedCandles = await this.candleDataDbService.findAll(
       {
         symbol,
         interval,
@@ -204,8 +204,18 @@ export class CandleViewService {
     );
 
     log("candleViewService found cached candles", {
-      count: cachedCandles.length,
+      count: rawCachedCandles.length,
     });
+
+    const seenSet = new Set<number>();
+    const cachedCandles = rawCachedCandles
+      .filter((candle) => {
+        if (seenSet.has(candle.timestamp)) {
+          return false;
+        }
+        seenSet.add(candle.timestamp);
+        return true;
+      });
 
     // If we have enough candles in cache, return them
     if (cachedCandles.length >= limit) {
@@ -217,16 +227,7 @@ export class CandleViewService {
         count: sortedCandles.length,
       });
 
-      return sortedCandles.map(
-        ({ timestamp, open, high, low, close, volume }) => ({
-          timestamp,
-          open,
-          high,
-          low,
-          close,
-          volume,
-        })
-      );
+      return sortedCandles;
     }
 
     // Fetch fresh candles from exchange
