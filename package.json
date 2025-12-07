@@ -13,6 +13,7 @@
     "start:debug": "npm run build && dotenv -e .env -- bun --inspect-brk ./build/index.mjs --noJob --serve",
     "start:repl": "npm run build && dotenv -e .env -- bun ./scripts/repl.ts --repl",
     "dump:markdown": "cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT bun ./scripts/dump.ts",
+    "dump:json": "cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT bun ./scripts/json.ts",
     "publish:win": "npm run build && .\\scripts\\win\\publish.bat",
     "publish:x": "npm run build && sh ./scripts/linux/publish.sh"
   },
