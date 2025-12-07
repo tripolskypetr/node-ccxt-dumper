@@ -98,10 +98,10 @@ ${SYMBOLS.map(s => `- ${s}`).join("\n")}
 ## Report Types
 
 ### Historical Analysis Data
-1. **Long Term** - Long-term analysis history (4h timeframe)
-2. **Short Term** - Short-term analysis history (1h timeframe)
-3. **Swing Term** - Swing-term analysis history (15m timeframe)
-4. **Micro Term** - Micro-term analysis history (1m timeframe)
+1. **Long Term** - 1-Hour candles trading analysis (48 candles lookback, 48 hours)
+2. **Short Term** - 15-Minute candles trading analysis
+3. **Swing Term** - 30-Minute candles analysis (96 candles lookback, 48 hours)
+4. **Micro Term** - 1-Minute candles analysis (60 candles lookback, 1 hour)
 
 ## File Naming Convention
 

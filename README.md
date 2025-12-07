@@ -1048,10 +1048,10 @@ cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT,ETHUSDT bun ./s
 ```
 
 **Downloaded reports:**
-- Long Term analysis history (4h timeframe)
-- Short Term analysis history (1h timeframe)
-- Swing Term analysis history (15m timeframe)
-- Micro Term analysis history (1m timeframe)
+- Long Term - 1-Hour candles trading analysis (48 candles lookback, 48 hours)
+- Short Term - 15-Minute candles trading analysis
+- Swing Term - 30-Minute candles analysis (96 candles lookback, 48 hours)
+- Micro Term - 1-Minute candles analysis (60 candles lookback, 1 hour)
 
 ### JSON Data Dump
 
@@ -1075,10 +1075,10 @@ cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT bun ./scripts/j
 ```
 
 **Downloaded data:**
-- Long Term range data (4h timeframe)
-- Short Term range data (1h timeframe)
-- Swing Term range data (15m timeframe)
-- Micro Term range data (1m timeframe)
+- Long Term - 1-Hour candles with technical indicators (48 candles lookback, 48 hours)
+- Short Term - 15-Minute candles with technical indicators
+- Swing Term - 30-Minute candles with technical indicators (96 candles lookback, 48 hours)
+- Micro Term - 1-Minute candles with technical indicators (60 candles lookback, 1 hour)
 
 **Date range:** Automatically calculates last 7 days from current timestamp.
 

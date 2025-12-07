@@ -94,19 +94,21 @@ ${SYMBOLS.map(s => `- ${s}`).join("\n")}
 
 ## Data Types
 
-### Historical Candle Data (Last 7 Days)
-1. **Long Term** - Long-term candle data (4h timeframe)
-2. **Short Term** - Short-term candle data (1h timeframe)
-3. **Swing Term** - Swing-term candle data (15m timeframe)
-4. **Micro Term** - Micro-term candle data (1m timeframe)
+### Historical Analysis Data (Last 7 Days)
+1. **Long Term** - 1-Hour candles with technical indicators (48 candles lookback, 48 hours)
+2. **Short Term** - 15-Minute candles with technical indicators
+3. **Swing Term** - 30-Minute candles with technical indicators (96 candles lookback, 48 hours)
+4. **Micro Term** - 1-Minute candles with technical indicators (60 candles lookback, 1 hour)
 
 ## File Naming Convention
 
 Files are named using the pattern: \`{SYMBOL}_{endpoint-name}.json\`
 
 Examples:
-- \`BTCUSDT_hour-range.json\`
-- \`BTCUSDT_one-minute-range.json\`
+- \`BTCUSDT_long-term-range.json\`
+- \`BTCUSDT_short-term-range.json\`
+- \`ETHUSDT_swing-term-range.json\`
+- \`ETHUSDT_micro-term-range.json\`
 - \`ETHUSDT_long-term-range.json\`
 
 ## Data Format
