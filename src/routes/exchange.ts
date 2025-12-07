@@ -111,15 +111,8 @@ app.get("/exchange/candles", async (ctx) => {
       since
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/exchange/candles GET ok", { requestId, symbol, interval, calculatedSince: since });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/exchange/candles GET error", {
       requestId,
@@ -127,14 +120,7 @@ app.get("/exchange/candles", async (ctx) => {
       interval,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/exchange/candles GET ${requestId}`);
   }

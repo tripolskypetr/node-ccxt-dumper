@@ -87,29 +87,15 @@ app.get("/view/long-term", async (ctx) => {
       offset
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/view/long-term GET ok", { requestId, symbol });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/long-term GET error", {
       requestId,
       symbol,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/long-term GET ${requestId}`);
   }
@@ -177,29 +163,15 @@ app.get("/view/swing-term", async (ctx) => {
       offset
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/view/swing-term GET ok", { requestId, symbol });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/swing-term GET error", {
       requestId,
       symbol,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/swing-term GET ${requestId}`);
   }
@@ -267,29 +239,15 @@ app.get("/view/short-term", async (ctx) => {
       offset
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/view/short-term GET ok", { requestId, symbol });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/short-term GET error", {
       requestId,
       symbol,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/short-term GET ${requestId}`);
   }
@@ -357,29 +315,15 @@ app.get("/view/micro-term", async (ctx) => {
       offset
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/view/micro-term GET ok", { requestId, symbol });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/micro-term GET error", {
       requestId,
       symbol,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/micro-term GET ${requestId}`);
   }
@@ -455,29 +399,15 @@ app.get("/view/long-term-range", async (ctx) => {
       offset
     );
 
-    const result = {
-      data,
-      status: "ok",
-      error: "",
-      requestId,
-    };
-
     logger.log("/view/long-term-range GET ok", { requestId, symbol });
-    return ctx.json(result, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/long-term-range GET error", {
       requestId,
       symbol,
       error: errorData(error),
     });
-    return ctx.json(
-      {
-        status: "error",
-        error: getErrorMessage(error),
-        requestId,
-      },
-      200
-    );
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/long-term-range GET ${requestId}`);
   }
@@ -511,10 +441,10 @@ app.get("/view/swing-term-range", async (ctx) => {
   try {
     const data = await signal.swingTermViewService.getRange(symbol, startDate, endDate, limit, offset);
     logger.log("/view/swing-term-range GET ok", { requestId, symbol });
-    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/swing-term-range GET error", { requestId, symbol, error: errorData(error) });
-    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/swing-term-range GET ${requestId}`);
   }
@@ -548,10 +478,10 @@ app.get("/view/short-term-range", async (ctx) => {
   try {
     const data = await signal.shortTermViewService.getRange(symbol, startDate, endDate, limit, offset);
     logger.log("/view/short-term-range GET ok", { requestId, symbol });
-    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/short-term-range GET error", { requestId, symbol, error: errorData(error) });
-    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/short-term-range GET ${requestId}`);
   }
@@ -585,10 +515,10 @@ app.get("/view/micro-term-range", async (ctx) => {
   try {
     const data = await signal.microTermViewService.getRange(symbol, startDate, endDate, limit, offset);
     logger.log("/view/micro-term-range GET ok", { requestId, symbol });
-    return ctx.json({ data, status: "ok", error: "", requestId }, 200);
+    return ctx.json(data, 200);
   } catch (error) {
     logger.log("/view/micro-term-range GET error", { requestId, symbol, error: errorData(error) });
-    return ctx.json({ status: "error", error: getErrorMessage(error), requestId }, 200);
+    return ctx.text("Internal Server Error", 500);
   } finally {
     console.timeEnd(`/view/micro-term-range GET ${requestId}`);
   }
