@@ -12,10 +12,6 @@ const SYMBOLS = SYMBOL_LIST.split(",").map(symbol => symbol.trim());
 // All available export endpoints
 const EXPORT_ENDPOINTS = [
   // History Services Reports
-  "/export/history/one-minute/:symbol",
-  "/export/history/fifteen-minute/:symbol",
-  "/export/history/thirty-minute/:symbol",
-  "/export/history/hour/:symbol",
   "/export/history/long-term/:symbol",
   "/export/history/short-term/:symbol",
   "/export/history/swing-term/:symbol",
@@ -101,36 +97,33 @@ ${SYMBOLS.map(s => `- ${s}`).join("\n")}
 
 ## Report Types
 
-### Historical Candle Data
-1. **One Minute** - 1-minute candle history with OHLCV data
-2. **Fifteen Minute** - 15-minute candle history with OHLCV data
-3. **Thirty Minute** - 30-minute candle history with OHLCV data
-4. **Hour** - 1-hour candle history with OHLCV data
-5. **Long Term** - Long-term candle history (4h timeframe)
-6. **Short Term** - Short-term candle history (1h timeframe)
-7. **Swing Term** - Swing-term candle history (15m timeframe)
-8. **Micro Term** - Micro-term candle history (1m timeframe)
+### Historical Analysis Data
+1. **Long Term** - Long-term analysis history (4h timeframe)
+2. **Short Term** - Short-term analysis history (1h timeframe)
+3. **Swing Term** - Swing-term analysis history (15m timeframe)
+4. **Micro Term** - Micro-term analysis history (1m timeframe)
 
 ## File Naming Convention
 
 Files are named using the pattern: \`{SYMBOL}_{endpoint-name}.md\`
 
 Examples:
-- \`BTCUSDT_history-hour.md\`
-- \`BTCUSDT_history-one-minute.md\`
-- \`ETHUSDT_history-long-term.md\`
+- \`BTCUSDT_history-long-term.md\`
+- \`BTCUSDT_history-short-term.md\`
+- \`ETHUSDT_history-swing-term.md\`
+- \`ETHUSDT_history-micro-term.md\`
 
 ## Data Format
 
-Each report contains historical OHLCV (Open, High, Low, Close, Volume) data in markdown table format:
+Each report contains historical analysis data with technical indicators in markdown table format:
 
-- **Timestamp** - Unix timestamp in milliseconds
 - **Date** - Human-readable date/time
-- **Open** - Opening price
-- **High** - Highest price in period
-- **Low** - Lowest price in period
-- **Close** - Closing price
-- **Volume** - Trading volume
+- **Symbol** - Trading pair
+- **Price Data** - Open, High, Low, Close, Volume
+- **Technical Indicators** - RSI, MACD, Bollinger Bands, EMA, SMA, ATR, ADX, CCI, Stochastic RSI
+- **Support/Resistance Levels** - Key price levels
+- **Fibonacci Levels** - Retracement and extension levels
+- **Patterns** - Reversal and continuation patterns
 
 ## Usage for LLM Trading Strategy
 

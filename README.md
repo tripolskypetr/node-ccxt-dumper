@@ -1035,7 +1035,7 @@ npm run dump:markdown
 ```
 
 This script:
-- Downloads markdown reports from all 8 history endpoints
+- Downloads markdown reports from 4 history endpoints
 - Saves to `./dump/markdown/` directory
 - Configurable via environment variables:
   - `API_URL` - API server URL (default: `http://localhost:30050`)
@@ -1048,14 +1048,10 @@ cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT,ETHUSDT bun ./s
 ```
 
 **Downloaded reports:**
-- One Minute candle history
-- Fifteen Minute candle history
-- Thirty Minute candle history
-- Hour candle history
-- Long Term history (4h timeframe)
-- Short Term history (1h timeframe)
-- Swing Term history (15m timeframe)
-- Micro Term history (1m timeframe)
+- Long Term analysis history (4h timeframe)
+- Short Term analysis history (1h timeframe)
+- Swing Term analysis history (15m timeframe)
+- Micro Term analysis history (1m timeframe)
 
 ### JSON Data Dump
 
