@@ -2,6 +2,18 @@ import { log } from "pinolog";
 import { getExchange } from "../../../config/ccxt";
 import { CC_AVG_PRICE_CANDLES_COUNT } from "../../../config/params";
 
+const roundTicks = (price: string | number, tickSize: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 8
+  });
+  // @ts-ignore
+  const precision = formatter.format(tickSize).split('.')[1].length || 0;
+  if (typeof price === 'string') price = parseFloat(price);
+  return price.toFixed(precision);
+};
+
 type CandleInterval = "1m" | "3m" | "5m" | "15m" | "30m" | "1h" | "2h" | "4h" | "6h" | "8h";
 
 const INTERVAL_MINUTES: Record<CandleInterval, number> = {
@@ -113,7 +125,12 @@ export class ExchangeService {
       symbol,
     });
     const exchange = await getExchange();
-    return await exchange.amountToPrecision(symbol, quantity);
+    const market = exchange.market(symbol);
+    const stepSize = market.limits?.amount?.min || market.precision?.amount;
+    if (stepSize !== undefined) {
+      return roundTicks(quantity, stepSize);
+    }
+    return exchange.amountToPrecision(symbol, quantity);
   };
 
   public formatPrice = async (symbol: string, price: number) => {
@@ -121,7 +138,12 @@ export class ExchangeService {
       price,
     });
     const exchange = await getExchange();
-    return await exchange.priceToPrecision(symbol, price);
+    const market = exchange.market(symbol);
+    const tickSize = market.limits?.price?.min || market.precision?.price;
+    if (tickSize !== undefined) {
+      return roundTicks(price, tickSize);
+    }
+    return exchange.priceToPrecision(symbol, price);
   };
 }
 

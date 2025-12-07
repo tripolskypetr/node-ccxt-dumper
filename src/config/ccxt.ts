@@ -10,5 +10,6 @@ export const getExchange = singleshot(async (): Promise<Exchange> => {
     },
     enableRateLimit: true,
   });
+  await exchange.loadMarkets();
   return exchange;
 });

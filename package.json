@@ -12,6 +12,7 @@
     "start:launcher:win": "dotenv -e .env -- bun ./index.cjs",
     "start:debug": "npm run build && dotenv -e .env -- bun --inspect-brk ./build/index.mjs --noJob --serve",
     "start:repl": "npm run build && dotenv -e .env -- bun ./scripts/repl.ts --repl",
+    "dump:markdown": "cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT bun ./scripts/dump.ts",
     "publish:win": "npm run build && .\\scripts\\win\\publish.bat",
     "publish:x": "npm run build && sh ./scripts/linux/publish.sh"
   },
@@ -35,17 +36,18 @@
   "dependencies": {
     "@hono/node-server": "1.14.4",
     "@hono/node-ws": "1.1.4",
-    "hono": "4.7.5",
-    "stack-trace": "1.0.0-pre2",
-    "di-factory": "1.0.9",
     "backtest-kit": "1.1.3",
-    "dayjs": "1.11.13",
     "ccxt": "4.5.20",
+    "cross-env": "10.1.0",
+    "dayjs": "1.11.13",
+    "di-factory": "1.0.9",
     "di-kit": "1.0.18",
-    "mongoose": "8.13.2",
     "functools-kit": "1.0.93",
+    "hono": "4.7.5",
     "lodash-es": "4.17.21",
+    "mongoose": "8.13.2",
     "pinolog": "1.0.5",
+    "stack-trace": "1.0.0-pre2",
     "trading-signals": "6.9.1"
   }
 }
