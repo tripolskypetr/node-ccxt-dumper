@@ -1021,6 +1021,80 @@ All requests are logged using the `pinolog` library. Logs include:
 - `http_exchange.log` - Exchange API candle requests with caching
 - `http_view.log` - All view endpoints (long-term, swing-term, short-term, micro-term)
 
+
+## Data Dumping Scripts
+
+The project includes utility scripts to download and export data for offline analysis or LLM processing.
+
+### Markdown Reports Dump
+
+Download all historical markdown reports for specified symbols:
+
+```bash
+npm run dump:markdown
+```
+
+This script:
+- Downloads markdown reports from all 8 history endpoints
+- Saves to `./dump/markdown/` directory
+- Configurable via environment variables:
+  - `API_URL` - API server URL (default: `http://localhost:30050`)
+  - `SYMBOL_LIST` - Comma-separated symbols (default: `BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT`)
+
+**Custom usage:**
+```bash
+# Download reports for custom symbols from remote server
+cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT,ETHUSDT bun ./scripts/dump.ts
+```
+
+**Downloaded reports:**
+- One Minute candle history
+- Fifteen Minute candle history
+- Thirty Minute candle history
+- Hour candle history
+- Long Term history (4h timeframe)
+- Short Term history (1h timeframe)
+- Swing Term history (15m timeframe)
+- Micro Term history (1m timeframe)
+
+### JSON Data Dump
+
+Download JSON data for the last 7 days from view endpoints:
+
+```bash
+npm run dump:json
+```
+
+This script:
+- Downloads JSON data from 4 view range endpoints for the last 7 days
+- Saves to `./dump/json/` directory
+- Configurable via environment variables:
+  - `API_URL` - API server URL (default: `http://localhost:30050`)
+  - `SYMBOL_LIST` - Comma-separated symbols (default: `BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT`)
+
+**Custom usage:**
+```bash
+# Download JSON data for custom symbols from remote server
+cross-env API_URL=http://82.215.85.187:30050 SYMBOL_LIST=BTCUSDT bun ./scripts/json.ts
+```
+
+**Downloaded data:**
+- Long Term range data (4h timeframe)
+- Short Term range data (1h timeframe)
+- Swing Term range data (15m timeframe)
+- Micro Term range data (1m timeframe)
+
+**Date range:** Automatically calculates last 7 days from current timestamp.
+
+**Output format:** JSON files with OHLCV data including:
+- timestamp - Unix timestamp in milliseconds
+- date - ISO 8601 date string
+- open, high, low, close - Price data
+- volume - Trading volume
+- Technical indicators (RSI, MACD, Bollinger Bands, etc.)
+
+Both scripts create a `README.md` in their respective dump directories with information about the downloaded data.
+
 ## Performance
 
 - **TTL Caching**: Analysis results are cached for the TTL period to reduce exchange load
