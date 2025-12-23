@@ -1,5 +1,5 @@
 const { spawn } = require("child_process");
-const { apps } = require("./config/ecosystem.config.js");
+const { apps } = require("./config/ecosystem.config.cjs");
 
 const { sleep, singlerun } = require("functools-kit");
 
