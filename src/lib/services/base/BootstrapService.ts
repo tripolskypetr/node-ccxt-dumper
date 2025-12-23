@@ -25,6 +25,8 @@ type Message = Omit<IBroadcastMessage, "__type__">;
 
 const BROADCAST_CHANNEL = "node-ccxt-dumper-broadcast-channel";
 
+const USE_LOCAL = false;
+
 export class BootstrapService {
   private readonly errorService = inject<ErrorService>(TYPES.errorService);
 
@@ -159,31 +161,49 @@ export class BootstrapService {
   }
 
   public get isLongTermWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.LongTermWorker;
   }
 
   public get isSwingTermWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.SwingTermWorker;
   }
 
   public get isShortTermWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.ShortTermWorker;
   }
 
   public get isMicroTermWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.MicroTermWorker;
   }
 
   public get isSlopeDataWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.SlopeDataWorker;
   }
 
   public get isVolumeDataWorker() {
+    if (this.isRepl || USE_LOCAL) {
+      return true;
+    }
     const { worker } = this.getArgs();
     return worker === WorkerName.VolumeDataWorker;
   }
@@ -198,7 +218,7 @@ export class BootstrapService {
       });
       this.getMessageSubject(message.topic).next(message);
     });
-    if (this.isWorker) {
+    if (this.isWorker || this.isRepl || USE_LOCAL) {
       return;
     }
     WORKER_LIST.forEach((worker) =>
