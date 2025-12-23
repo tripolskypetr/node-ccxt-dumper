@@ -6,6 +6,8 @@
   "scripts": {
     "cleanup": "bun pm cache rm",
     "build": "rollup -c",
+    "pm2:start": "pm2 start ./config/ecosystem.config.cjs",
+    "pm2:stop": "pm2 stop ./config/ecosystem.config.cjs",
     "start": "npm run build && dotenv -e .env -- bun ./build/index.mjs --noJob --serve",
     "start:launcher": "npm run start:launcher:x",
     "start:launcher:x": "dotenv -e .env -- bun ./index.cjs",
